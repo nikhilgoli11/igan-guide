@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Track IgAN Numbers — igAN Guide</title>
+<style>
+
+:root{--ink:#17324d;--muted:#657587;--bg:#f5fafb;--card:#fff;--teal:#18796f;--teal2:#def2ee;--line:#dce7ed;--navy:#17324d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+nav{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 7%;position:sticky;top:0;z-index:10}.logo{font-weight:850;font-size:21px}.logo span{color:var(--teal)}nav a{color:var(--ink);text-decoration:none;margin-left:23px;font-size:14px}
+.hero{padding:78px 7%;background:linear-gradient(135deg,#edf9f6,#f7fbfd)}.hero-inner{max-width:1080px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr;gap:55px;align-items:center}.badge{display:inline-block;background:var(--teal2);color:var(--teal);padding:6px 12px;border-radius:20px;font-size:13px;font-weight:750}h1{font-size:clamp(40px,6vw,66px);line-height:1.04;margin:18px 0}.hero p{font-size:19px;color:var(--muted);max-width:650px}.btn{display:inline-block;margin-top:18px;background:var(--teal);color:white;text-decoration:none;padding:12px 20px;border-radius:9px;font-weight:700}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 16px 45px #17324d12}.metric{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.metric:last-child{border:0}
+section{max-width:1120px;margin:auto;padding:64px 7%}h2{font-size:32px;margin:0 0 8px}.intro{color:var(--muted);max-width:760px}
+.tool{margin-top:28px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}.inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}label{font-size:13px;font-weight:700;display:block;margin-bottom:6px}input,select{width:100%;padding:12px;border:1px solid #cbd9e1;border-radius:9px;font-size:15px}button{margin-top:18px;border:0;background:var(--teal);color:#fff;padding:12px 18px;border-radius:9px;font-weight:750;cursor:pointer}.result{display:none;margin-top:22px;padding:18px;border-radius:12px;background:var(--teal2)}.result strong{font-size:20px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}.card h3{margin-top:0}.card p{color:var(--muted);font-size:14px}
+.navy{background:var(--navy);max-width:none;color:#fff}.navy-inner{max-width:1120px;margin:auto}.navy .intro{color:#cedae4}.mest{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:26px}.mest div{background:#24455f;border:1px solid #355a73;border-radius:12px;padding:18px}.mest b{font-size:23px}.mest p{font-size:13px;color:#d5e0e8}
+.warning{background:#fff5df;border:1px solid #f0d9a3;border-radius:12px;padding:16px;color:#664b16;font-size:14px;margin-top:22px}
+.sources{display:flex;flex-direction:column;gap:12px;margin-top:25px}.source{background:#fff;border:1px solid var(--line);padding:17px;border-radius:12px}.source a{color:var(--teal);font-weight:700}
+footer{padding:34px 7%;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:1000px){#journey > div{grid-template-columns:repeat(2,1fr)!important}}@media(max-width:800px){nav{padding:0 5%}nav div:last-child{display:none}.hero{padding:55px 5%}.hero-inner{grid-template-columns:1fr}section{padding:50px 5%}.inputs,.cards,.mest{grid-template-columns:1fr}}
+
+.page-wrap{max-width:1120px;margin:auto;padding:60px 7%}
+.breadcrumb{font-size:13px;color:#657587;margin-bottom:12px}
+.page-hero{padding:58px 7%;background:linear-gradient(135deg,#edf9f6,#f7fbfd)}
+.page-hero-inner{max-width:1120px;margin:auto}
+.page-hero h1{font-size:clamp(38px,5vw,58px);margin:10px 0}
+.site-nav-links a{margin-left:18px}
+@media(max-width:800px){.site-nav-links{display:none}}
+</style></head><body><nav><div class="logo"><span>ig</span>AN Guide</div>
+    <div class="site-nav-links">
+    <a href="index.html">Home</a><a href="journey.html">Start Here</a>
+    <a href="reports.html">Reports</a><a href="track.html">Track</a>
+    <a href="treatment.html">Treatment</a><a href="mestc.html">MEST-C</a><a href="sources.html">Sources</a>
+    <a href="faq.html">FAQ</a></div></nav>
+<header class="page-hero"><div class="page-hero-inner"><div class="breadcrumb">Home / Track</div>
+<h1>Track your IgAN numbers</h1><p class="intro">A simple browser-based timeline for eGFR, UPCR and blood pressure.</p></div></header>
+<section><div class="tool"><div class="inputs">
+<div><label for="date">Date</label><input id="date" type="date"></div>
+<div><label for="egfr">eGFR</label><input id="egfr" type="number" min="0"></div>
+<div><label for="upcr">UPCR (g/g)</label><input id="upcr" type="number" min="0" step="0.01"></div>
+<div><label for="bp">BP</label><input id="bp" type="text" placeholder="128/78"></div>
+</div><button onclick="addEntry()">Add result</button><button onclick="clearAll()" style="background:#647587;margin-left:8px">Clear history</button>
+<div id="history" style="margin-top:24px"></div>
+<div class="cards" style="margin-top:24px"><div class="card"><h3>eGFR trend</h3><canvas id="egfrChart"></canvas></div><div class="card"><h3>UPCR trend</h3><canvas id="upcrChart"></canvas></div></div>
+</div><div class="warning"><strong>Privacy:</strong> This demo stores entries only in this browser. A public version should use stronger privacy controls before storing health information on a server.</div></section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let data=JSON.parse(localStorage.getItem('iganGuideData')||'[]'),c1,c2;
+function save(){localStorage.setItem('iganGuideData',JSON.stringify(data))}
+function addEntry(){let d=document.getElementById('date').value,e=parseFloat(document.getElementById('egfr').value),u=parseFloat(document.getElementById('upcr').value),b=document.getElementById('bp').value.trim();
+if(!d||(Number.isNaN(e)&&Number.isNaN(u)&&!b)){alert('Enter a date and at least one result.');return}data.push({d,e:Number.isNaN(e)?null:e,u:Number.isNaN(u)?null:u,b});data.sort((a,b)=>a.d.localeCompare(b.d));save();render()}
+function remove(i){data.splice(i,1);save();render()}
+function clearAll(){if(confirm('Clear all results from this browser?')){data=[];save();render()}}
+function render(){let h=document.getElementById('history');if(!data.length)h.innerHTML='<p style="color:#657587">No results added yet.</p>';else h.innerHTML='<div style="overflow:auto"><table style="width:100%;border-collapse:collapse"><tr><th>Date</th><th>eGFR</th><th>UPCR</th><th>BP</th><th></th></tr>'+data.map((x,i)=>'<tr><td>'+x.d+'</td><td>'+(x.e??'—')+'</td><td>'+(x.u??'—')+'</td><td>'+(x.b||'—')+'</td><td><button onclick="remove('+i+')" style="padding:6px 9px;background:#647587">Remove</button></td></tr>').join('')+'</table></div>';
+if(c1)c1.destroy();if(c2)c2.destroy();let labels=data.map(x=>x.d);c1=new Chart(document.getElementById('egfrChart'),{type:'line',data:{labels,datasets:[{label:'eGFR',data:data.map(x=>x.e),spanGaps:true,tension:.25}]},options:{responsive:true}});c2=new Chart(document.getElementById('upcrChart'),{type:'line',data:{labels,datasets:[{label:'UPCR',data:data.map(x=>x.u),spanGaps:true,tension:.25}]},options:{responsive:true}})}
+render();
+</script>
+<footer><strong>igAN Guide</strong> · Educational information only<br>
+    <span style="display:inline-block;margin-top:7px">Home · Start Here · Reports · Track · Treatment · MEST-C · FAQ</span></footer></body></html>
