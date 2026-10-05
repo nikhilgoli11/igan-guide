@@ -23,14 +23,20 @@ footer{padding:34px 7%;border-top:1px solid var(--line);color:var(--muted);font-
 .page-hero h1{font-size:clamp(38px,5vw,58px);margin:10px 0}
 .site-nav-links a{margin-left:18px}
 @media(max-width:800px){.site-nav-links{display:none}}
-</style></head><body><nav><div class="logo"><span>ig</span>AN Guide</div>
+</style>
+<style>
+.explain-block{padding:14px 0;border-top:1px solid rgba(23,50,77,.12);font-size:16px;line-height:1.65}
+.explain-block:first-of-type{border-top:0}
+.result h3{margin-bottom:12px}
+</style>
+</head><body><nav><div class="logo"><span>ig</span>AN Guide</div>
     <div class="site-nav-links">
     <a href="index.html">Home</a><a href="journey.html">Start Here</a>
     <a href="reports.html">Reports</a><a href="track.html">Track</a>
     <a href="treatment.html">Treatment</a><a href="mestc.html">MEST-C</a><a href="sources.html">Sources</a>
     <a href="faq.html">FAQ</a></div></nav>
 <header class="page-hero"><div class="page-hero-inner"><div class="breadcrumb">Home / Reports</div>
-<h1>Understand your kidney report</h1><p class="intro">Enter individual values to get a plain-English explanation of what they measure. This is not a diagnostic calculator.</p></div></header>
+<h1>Understand your kidney report</h1><p class="intro">Enter individual values to get a plain-English explanation of the number you entered — including its broad range and why it matters in IgAN. This is not a diagnostic calculator.</p></div></header>
 <section><div class="tool"><div class="inputs">
 <div><label for="egfr">eGFR (mL/min/1.73 m²)</label><input id="egfr" type="number" min="0" placeholder="e.g. 72"></div>
 <div><label for="upcr">UPCR (g/g)</label><input id="upcr" type="number" min="0" step="0.01" placeholder="e.g. 0.8"></div>
@@ -43,11 +49,48 @@ footer{padding:34px 7%;border-top:1px solid var(--line);color:var(--muted);font-
 <div class="warning"><strong>Important:</strong> A single laboratory value rarely tells the whole story. Discuss your results with your healthcare professional.</div></section>
 <script>
 function explain(){
- const e=parseFloat(document.getElementById('egfr').value),u=parseFloat(document.getElementById('upcr').value),b=document.getElementById('bp').value.trim();let p=[];
- if(!Number.isNaN(e))p.push('<strong>eGFR '+e+'</strong>: an estimate of kidney filtration; interpret it with your history and trends.');
- if(!Number.isNaN(u))p.push('<strong>UPCR '+u+' g/g</strong>: estimates urine protein loss; persistent proteinuria is important in IgAN assessment.');
- if(b)p.push('<strong>BP '+b+'</strong>: blood pressure is an important part of kidney care; your personal target should come from your clinician.');
- if(!p.length)p.push('Enter at least one value above.');const r=document.getElementById('result');r.innerHTML=p.join('<br><br>');r.style.display='block';
+  const e=parseFloat(document.getElementById('egfr').value);
+  const u=parseFloat(document.getElementById('upcr').value);
+  const b=document.getElementById('bp').value.trim();
+  let p=[];
+
+  if(!Number.isNaN(e)){
+    let label='';
+    if(e>=90) label='This falls in the G1 eGFR range.';
+    else if(e>=60) label='This falls in the G2 eGFR range (60–89).';
+    else if(e>=45) label='This falls in the G3a eGFR range (45–59).';
+    else if(e>=30) label='This falls in the G3b eGFR range (30–44).';
+    else if(e>=15) label='This falls in the G4 eGFR range (15–29).';
+    else label='This falls in the G5 eGFR range (<15).';
+    p.push(`<div class="explain-block"><strong>eGFR ${e}</strong><br>${label} eGFR is an estimate of kidney filtration. An eGFR category by itself does not diagnose chronic kidney disease; persistence over time and other markers of kidney damage matter.</div>`);
+  }
+
+  if(!Number.isNaN(u)){
+    const mg=Math.round(u*1000);
+    let level='';
+    if(u<0.3) level='This is below 0.3 g/g (300 mg/g).';
+    else if(u<0.5) level='This is between 0.3 and 0.5 g/g.';
+    else level='This is 0.5 g/g or higher.';
+    p.push(`<div class="explain-block"><strong>UPCR ${u} g/g (${mg} mg/g)</strong><br>${level} In IgAN, persistent proteinuria is an important marker of kidney risk. KDIGO 2025 identifies proteinuria of about 0.5 g/day or equivalent as a level at which treatment or additional treatment should be considered, with lower levels associated with better long-term outcomes. UPCR is a ratio, so your clinician interprets it in context rather than treating one result as a diagnosis.</div>`);
+  }
+
+  if(b){
+    const m=b.match(/^\s*(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)\s*$/);
+    if(m){
+      const sys=Number(m[1]), dia=Number(m[2]);
+      let level = sys<120 ? 'The systolic value is below 120 mmHg.' :
+                  sys<130 ? 'The systolic value is 120–129 mmHg.' :
+                  'The systolic value is 130 mmHg or higher.';
+      p.push(`<div class="explain-block"><strong>BP ${sys}/${dia} mmHg</strong><br>${level} ${sys>=130?'For people with CKD, this is above the systolic level used in some guideline-based treatment targets.':'This is not, by itself, a reason to change treatment.'} Blood-pressure targets depend on how the measurement was taken, symptoms, medications and your clinician's plan.</div>`);
+    } else {
+      p.push(`<div class="explain-block"><strong>BP ${b}</strong><br>Blood pressure is important in kidney care. Enter it as systolic/diastolic (for example, 128/78) to get a more specific explanation.</div>`);
+    }
+  }
+
+  if(!p.length) p.push('<div class="explain-block">Enter at least one value above.</div>');
+  const r=document.getElementById('result');
+  r.innerHTML='<h3 style="margin-top:0">What your numbers mean</h3>'+p.join('');
+  r.style.display='block';
 }
 </script>
 <footer><strong>igAN Guide</strong> · Educational information only<br>
